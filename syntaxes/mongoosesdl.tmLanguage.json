@@ -1,0 +1,153 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Mongoose SDL",
+  "patterns": [
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#mgsdl-enum"
+    },
+    {
+      "include": "#mgsdl-document-schema"
+    }
+  ],
+  "repository": {
+    "mgsdl-enum": {
+      "name": "meta.enum.mgsdl",
+      "begin": "\\s*+\\b(enum)\\b\\s*([_A-Za-z][_0-9A-Za-z]*)",
+      "end": "(?<=})",
+      "beginCaptures": {
+        "1": { "name": "keyword.enum.mgsdl" },
+        "2": { "name": "support.type.enum.mgsdl" }
+      },
+      "patterns": [
+        {
+          "name": "meta.type.object.mgsdl",
+          "begin": "\\s*({)",
+          "end": "\\s*(})",
+          "beginCaptures": {
+            "1": { "name": "punctuation.operation.mgsdl" }
+          },
+          "endCaptures": {
+            "1": { "name": "punctuation.operation.mgsdl" }
+          },
+          "patterns": [{ "include": "#mgsdl-enum-value" }]
+        }
+      ]
+    },
+    "mgsdl-enum-value": {
+      "name": "constant.character.enum.mgsdl",
+      "match": "\\s*(?!=\\b(true|false|null)\\b)([_A-Za-z][_0-9A-Za-z]*)"
+    },
+    "mgsdl-document-schema": {
+      "name": "meta.type.interface.mgsdl",
+      "begin": "\\s*\\b(?:(extends?)?\\b\\s*\\b(document)|(schema)|(input))\\b\\s*([_A-Za-z][_0-9A-Za-z]*)?",
+      "end": "(?=.)",
+      "applyEndPatternLast": 1,
+      "captures": {
+        "1": { "name": "keyword.type.mgsdl" },
+        "2": { "name": "keyword.type.mgsdl" },
+        "3": { "name": "keyword.interface.mgsdl" },
+        "4": { "name": "keyword.input.mgsdl" },
+        "5": { "name": "support.type.mgsdl" }
+      },
+      "patterns": [
+        {
+          "begin": "\\s*\\b(implements)\\b\\s*",
+          "end": "\\s*(?={)",
+          "beginCaptures": {
+            "1": { "name": "keyword.implements.mgsdl" }
+          },
+          "patterns": [
+            {
+              "match": "\\s*([_A-Za-z][_0-9A-Za-z]*)",
+              "captures": {
+                "1": { "name": "support.type.mgsdl" }
+              }
+            }
+          ]
+        },
+        { "include": "#mgsdl-type-object" }
+      ]
+    },
+    "mgsdl-type-object": {
+      "name": "meta.type.object.mgsdl",
+      "begin": "\\s*({)",
+      "end": "\\s*(})",
+      "beginCaptures": {
+        "1": { "name": "punctuation.operation.mgsdl" }
+      },
+      "endCaptures": {
+        "1": { "name": "punctuation.operation.mgsdl" }
+      },
+      "patterns": [{ "include": "#mgsdl-type-definition" }]
+    },
+    "mgsdl-type-definition": {
+      "comment": "key (optionalArgs): Type",
+      "begin": "\\s*([_A-Za-z][_0-9A-Za-z]*)(?=\\s*\\(|:)",
+      "end": "(?=\\s*(([_A-Za-z][_0-9A-Za-z]*)\\s*(\\(|:)|(})))|\\s*(,)",
+      "beginCaptures": {
+        "1": { "name": "variable.mgsdl" }
+      },
+      "endCaptures": {
+        "5": { "name": "punctuation.comma.mgsdl" }
+      },
+      "patterns": [
+        {
+          "include": "#mgsdl-colon"
+        },
+        {
+          "include": "#mgsdl-directive"
+        },
+        {
+          "include": "#mgsdl-input-types"
+        }
+      ]
+    },
+    "mgsdl-colon": {
+      "match": "\\s*(:)",
+      "captures": {
+        "1": { "name": "punctuation.colon.mgsdl" }
+      }
+    },
+    "mgsdl-directive": {
+      "begin": "\\s*((@)\\s*([_A-Za-z][_0-9A-Za-z]*))",
+      "end": "(?=.)",
+      "applyEndPatternLast": 1,
+      "beginCaptures": {
+        "1": { "name": "entity.name.function.directive.mgsdl" }
+      }
+    },
+    "mgsdl-input-types": {
+      "patterns": [
+        { "include": "#mgsdl-scalar-type" },
+        {
+          "match": "\\s*([_A-Za-z][_0-9A-Za-z]*)(?:\\s*(!))?",
+          "captures": {
+            "1": { "name": "support.type.mgsdl" },
+            "2": { "name": "keyword.operator.nulltype.mgsdl" }
+          }
+        },
+        {
+          "name": "meta.type.list.mgsdl",
+          "begin": "\\s*(\\[)",
+          "end": "\\s*(\\])(?:\\s*(!))?",
+          "captures": {
+            "1": { "name": "meta.brace.square.mgsdl" },
+            "2": { "name": "keyword.operator.nulltype.mgsdl" }
+          },
+          "patterns": [{ "include": "#mgsdl-input-types" }]
+        }
+      ]
+    },
+    "mgsdl-scalar-type": {
+      "match": "\\s*\\b(Number|String|Boolean)\\b(?:\\s*(!))?",
+      "captures": {
+        "1": { "name": "support.type.builtin.mgsdl" },
+        "2": { "name": "keyword.operator.nulltype.mgsdl" }
+      }
+    }
+  },
+  "scopeName": "source.mongoosesdl"
+}

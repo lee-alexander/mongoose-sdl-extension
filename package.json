@@ -1,0 +1,34 @@
+{
+  "name": "mongoose-sdl",
+  "displayName": "Mongoose SDL",
+  "description": "Syntax highlighting for Mongoose SDL",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.88.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "mongoosesdl",
+        "aliases": [
+          "Mongoose SDL",
+          "mongoosesdl"
+        ],
+        "extensions": [
+          ".mgsdl"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "mongoosesdl",
+        "scopeName": "source.mongoosesdl",
+        "path": "./syntaxes/mongoosesdl.tmLanguage.json"
+      }
+    ]
+  }
+}
