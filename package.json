@@ -1,7 +1,7 @@
 {
-  "name": "mongoose-sdl",
-  "displayName": "Mongoose SDL",
-  "description": "Syntax highlighting for Mongoose SDL",
+  "name": "mongoose-sdl-extension",
+  "displayName": "Mongoose SDL VSCode Extension",
+  "description": "Syntax highlighting for Mongoose SDL in VSCode",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.88.0"
