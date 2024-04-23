@@ -42,15 +42,14 @@
     },
     "mgsdl-document-schema": {
       "name": "meta.type.interface.mgsdl",
-      "begin": "\\s*\\b(?:(extends?)?\\b\\s*\\b(document)|(schema)|(input))\\b\\s*([_A-Za-z][_0-9A-Za-z]*)?",
+      "begin": "\\s*\\b(?:(extends?)?\\b\\s*\\b(model)|(schema))\\b\\s*([_A-Za-z][_0-9A-Za-z]*)?",
       "end": "(?=.)",
       "applyEndPatternLast": 1,
       "captures": {
         "1": { "name": "keyword.type.mgsdl" },
         "2": { "name": "keyword.type.mgsdl" },
         "3": { "name": "keyword.interface.mgsdl" },
-        "4": { "name": "keyword.input.mgsdl" },
-        "5": { "name": "support.type.mgsdl" }
+        "4": { "name": "support.type.mgsdl" }
       },
       "patterns": [
         {
